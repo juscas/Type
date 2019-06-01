@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System.IO;
+using System.Diagnostics;
+using Debug=UnityEngine.Debug;
 
 public class TextManager : MonoBehaviour {
 
@@ -11,22 +13,31 @@ public class TextManager : MonoBehaviour {
 	public string typedText; 
     public InputField inputField;
     [SerializeField]
-	private Text currentWord, typedWord;
+	private Text currentWord, typedWord, timerText, wpmText;
     [SerializeField]
     int points = 0;
-    private string wordsStr = "pension,shrink,bland,solution,feminine,policy,registration,dash,notion,lung,tourist,admire,reporter,waist,represent,poetry,define,administration,analysis,take,investment,outlet";
+    [SerializeField]
+    double wpm = 0.0;
+    private string wordsStr = "pension,shrink,bland,solution,feminine,policy,registration,dash,notion,lung,tourist,admire,reporter,waist,represent,poetry,define,administration,analysis,take,investment,outlet,e,e,e,e,e,e";
     public AudioClip textComplete;
     private AudioSource source;
 
     private Stack<string> words;
 
+    public Stopwatch timer = new Stopwatch();
+
     // Use this for initialization
     void Start () {
-        // construct stack on words, pop off each time it is correct
 
+        // construct stack on words, pop off each time it is correct
         words = makeStack();
 
-        //goalText = GetRandomWord (wordsStr);
+        // start timer (consider adding prompt to start...)
+        timer.Start();
+
+        timerText = GameObject.FindGameObjectWithTag("Timer").GetComponent<Text>();
+        wpmText = GameObject.Find("WordsPerMinute").GetComponent<Text>();
+
         goalText = words.Peek();
 		currentWord = GameObject.FindGameObjectWithTag("Text").GetComponent<Text> ();
 		currentWord.text = goalText;
@@ -41,11 +52,17 @@ public class TextManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        
+        if (points > 0){
+            wpm = (double)points/timer.Elapsed.Seconds*60.0;
+        }
+        wpmText.text = wpm.ToString("##.##");
+        timerText.text = timer.Elapsed.ToString().Substring(6,5);
+        
         //if stack is empty -> game over
         if (words.Count == 0){
-            Debug.Log("Stack is empty");
             //TODO: Game Over
+            timer.Stop();
             GameObject iFieldGO = GameObject.Find("InputField");
             InputField input = iFieldGO.GetComponent<InputField>();
             input.text = "you win";
@@ -126,7 +143,6 @@ public class TextManager : MonoBehaviour {
         Stack<string> wordStack = new Stack<string>();
         foreach (string word in wordsArr){
             wordStack.Push(word);
-            Debug.Log(word);
         }
 
         return wordStack;

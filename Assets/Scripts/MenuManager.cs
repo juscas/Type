@@ -42,7 +42,7 @@ public class MenuManager : MonoBehaviour
             rect.localPosition = rectPos;
             enterText.text = "Press enter";
             if (Input.GetButtonDown("Submit")){
-                SceneManager.LoadScene("Scene1",LoadSceneMode.Single);
+                SceneManager.LoadScene("Daily",LoadSceneMode.Single);
             }
             return;
         }
