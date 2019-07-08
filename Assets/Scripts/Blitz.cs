@@ -62,9 +62,9 @@ public class Blitz : MonoBehaviour {
         wpmText.text = wpm.ToString("##.##");
         timerText.text = timer.Elapsed.ToString().Substring(3,7);
         
-        //if stack is empty -> game over
+        //if stack is empty -> game over TODO: Set message
         if (words.Count == 0){
-            //TODO: Game Over
+            //TODO: Game Over 
             timer.Stop();
             GameObject iFieldGO = GameObject.Find("InputField");
             InputField input = iFieldGO.GetComponent<InputField>();
