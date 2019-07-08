@@ -29,7 +29,7 @@ public class TextManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        string pathToWordFile = "/home/justin/git-repos/Type/Assets/Scripts/wordfile.txt";
+        string pathToWordFile = "/home/justin/git-repos/Type/Assets/Scripts/wordfile.csv";
 
         wordsStr = File.ReadAllText(pathToWordFile);
         // construct stack on words, pop off each time it is correct

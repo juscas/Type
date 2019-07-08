@@ -16,7 +16,7 @@ public class PlayMenuManager : MonoBehaviour
     
     private Vector3 rectPos;
 
-    private const string DAILY = "daily", RANDOM = "random", BACK = "back";
+    private const string DAILY = "daily", BLITZ = "blitz", BACK = "back";
     void Start()
     {
 		typedWord = GameObject.FindGameObjectWithTag("Input").GetComponent<Text> ();
@@ -40,16 +40,16 @@ public class PlayMenuManager : MonoBehaviour
         if (typedText == DAILY){
             rectPos = new Vector3(-203,108,0);
             rect.localPosition = rectPos;
-            enterText.text = "Press enter";
+            enterText.text = "Finish the list of words as fast as possible \nPress enter to start";
             if (Input.GetButtonDown("Submit")){
                 SceneManager.LoadScene("Daily",LoadSceneMode.Single);
             }
             return;
         }
-        if (typedText == RANDOM){
+        if (typedText == BLITZ){
             rectPos = new Vector3(-203,48,0);
             rect.localPosition = rectPos;
-            enterText.text = "Press enter";
+            enterText.text = "Type as many words as you can before the timer runs out \nPress enter to start";
             return;
         }
         if (typedText == BACK){
