@@ -18,7 +18,7 @@ public class TextManager : MonoBehaviour {
     int points = 0;
     [SerializeField]
     double wpm = 0.0;
-    private string wordsStr = "pension,shrink,bland,solution,feminine,policy,registration,dash,notion,lung,tourist,admire,reporter,waist,represent,poetry,define,administration,analysis,take,investment,outlet,e,e,e,e,e,e";
+    private string wordsStr;// = "pension,shrink,bland,solution,feminine,policy,registration,dash,notion,lung,tourist,admire,reporter,waist,represent,poetry,define,administration,analysis,take,investment,outlet,e,e,e,e,e,e";
     public AudioClip textComplete;
     private AudioSource source;
 
@@ -29,6 +29,9 @@ public class TextManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
+        string pathToWordFile = "/home/justin/git-repos/Type/Assets/Scripts/wordfile.txt";
+
+        wordsStr = File.ReadAllText(pathToWordFile);
         // construct stack on words, pop off each time it is correct
         words = makeStack();
 
@@ -57,7 +60,7 @@ public class TextManager : MonoBehaviour {
             wpm = (double)points/timer.Elapsed.Seconds*60.0;
         }
         wpmText.text = wpm.ToString("##.##");
-        timerText.text = timer.Elapsed.ToString().Substring(6,5);
+        timerText.text = timer.Elapsed.ToString().Substring(3,7);
         
         //if stack is empty -> game over
         if (words.Count == 0){

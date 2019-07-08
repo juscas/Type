@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using System.IO;
 using UnityEngine.SceneManagement;
 
-public class MenuManager : MonoBehaviour
+public class PlayMenuManager : MonoBehaviour
 {
     // Start is called before the first frame update
     private Text typedWord;
@@ -16,7 +16,7 @@ public class MenuManager : MonoBehaviour
     
     private Vector3 rectPos;
 
-    private const string PLAY = "play", OPTIONS = "options", LEADERBOARDS = "leaderboards";
+    private const string DAILY = "daily", RANDOM = "random", BACK = "back";
     void Start()
     {
 		typedWord = GameObject.FindGameObjectWithTag("Input").GetComponent<Text> ();
@@ -37,26 +37,28 @@ public class MenuManager : MonoBehaviour
         GameObject enter = GameObject.Find("Enter");
         Text enterText = enter.GetComponent<Text>();
 
-        if (typedText == PLAY){
+        if (typedText == DAILY){
             rectPos = new Vector3(-203,108,0);
             rect.localPosition = rectPos;
             enterText.text = "Press enter";
             if (Input.GetButtonDown("Submit")){
-                Debug.Log("Pressed Enter");
-                SceneManager.LoadScene("PlayMenu",LoadSceneMode.Single);
+                SceneManager.LoadScene("Daily",LoadSceneMode.Single);
             }
             return;
         }
-        if (typedText == OPTIONS){
+        if (typedText == RANDOM){
             rectPos = new Vector3(-203,48,0);
             rect.localPosition = rectPos;
             enterText.text = "Press enter";
             return;
         }
-        if (typedText == LEADERBOARDS){
+        if (typedText == BACK){
             rectPos = new Vector3(-203,-12,0);
             rect.localPosition = rectPos;
             enterText.text = "Press enter";
+            if (Input.GetButtonDown("Submit")){
+                SceneManager.LoadScene("Menu",LoadSceneMode.Single);
+            }
             return;
         }
         enterText.text = "";
